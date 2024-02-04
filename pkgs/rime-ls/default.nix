@@ -2,6 +2,9 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
+  librime,
+  stdenv,
+  darwin,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "rime-ls";
@@ -11,10 +14,24 @@ rustPlatform.buildRustPackage rec {
     owner = "wlh320";
     repo = "rime-ls";
     rev = "v${version}";
-    sha256 = "";
+    sha256 = "sha256-6jiyOVjnYpX9C9H2+tTJqRUeqNWNVJ+acqStwMkaWb0=";
   };
 
-  cargoHash = "";
+  nativeBuildInputs = [
+    librime
+  ];
+
+  cargoLock = {
+    lockFile = ./Cargo.lock;
+    outputHashes = {
+      "librime-sys-0.1.0" = "sha256-Q8JrPksXUhTNC4qCJgezYyC/WSZ0EP8aGs0duwwT7/k=";
+    };
+  };
+
+  buildInputs =
+    lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.Security;
+
+  doCheck = false;
 
   meta = with lib; {
     description = "A language server for Rime input method engine";
