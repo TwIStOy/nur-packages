@@ -2,6 +2,4 @@
   lib = import ./lib {inherit pkgs;};
   modules = import ./modules;
   overlays = import ./overlays;
-
-  gersemi = pkgs.callPackage ./pkgs/gersemi {};
 }
