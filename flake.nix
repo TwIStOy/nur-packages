@@ -12,17 +12,13 @@
     nixpkgs,
     flake-utils,
     ...
-  }:
-    (flake-utils.lib.eachDefaultSystem (system: {
-      legacyPackages = import ./default.nix {
-        pkgs = import nixpkgs {inherit system;};
-      };
-    }))
-    // (flake-utils.lib.eachDefaultSystem (
-      system: {
-        packages = import ./pkgs {
-          pkgs = import nixpkgs {inherit system;};
-        };
-      }
-    ));
+  }
+  : (flake-utils.lib.eachDefaultSystem (system: let
+    pkgs = import nixpkgs {inherit system;};
+  in rec {
+    legacyPackages = import ./default.nix {
+      inherit pkgs;
+    };
+    packages = pkgs.lib.filterAttrs (_: v: pkgs.lib.isDerivation v) legacyPackages;
+  }));
 }
