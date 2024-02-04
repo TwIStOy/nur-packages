@@ -2,9 +2,9 @@
   lib,
   rustPlatform,
   fetchFromGitHub,
-  librime,
   stdenv,
   darwin,
+  librime,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "rime-ls";
@@ -19,6 +19,7 @@ rustPlatform.buildRustPackage rec {
 
   nativeBuildInputs = [
     librime
+    rustPlatform.bindgenHook
   ];
 
   cargoLock = {
