@@ -28,8 +28,19 @@ rustPlatform.buildRustPackage rec {
     };
   };
 
+  postPatch = ''
+    # update Cargo.lock to fix build
+    ln -sf ${./Cargo.lock} Cargo.lock
+  '';
+
+  C_INCLUDE_PATH = "${librime}/include";
+  LIBRARY_PATH = "${librime}/lib";
+
   buildInputs =
-    lib.optional stdenv.isDarwin darwin.apple_sdk.frameworks.Security;
+    [
+      librime
+    ]
+    ++ lib.optional stdenv.isDarwin [darwin.apple_sdk.frameworks.Security];
 
   doCheck = false;
 
