@@ -2,6 +2,8 @@
   buildVimPlugin,
   fetchFromGitHub,
   rustPlatform,
+  luajit,
+  pkg-config,
   ...
 }: {
   gh-actions-nvim = let
@@ -17,7 +19,15 @@
       inherit version;
       src = gh-actions-nvim-src;
 
-      cargoSha256 = "b546be4a5045d58a281bf10dee38982603f4d861dff09f1e6686c061f6f0a957";
+      nativeBuildInputs = [
+        luajit
+        pkg-config
+      ];
+      buildInputs = [
+        luajit
+      ];
+
+      cargoSha256 = "tfyYRiRpe1QxAfW02PqWxQGj43TD3YOck7lZ9psLd2s=";
     };
   in
     buildVimPlugin {
@@ -27,9 +37,8 @@
       propagatedBuildInputs = [gh-actions-nvim-bin];
       preFixup = ''
         mkdir -p "$out/lua/deps/"
-         cp "${gh-actions-nvim-bin}/target/release/libgh_actions_rust.dylib" "$out/lua/libgh_actions_rust.so" || true
-         cp "${gh-actions-nvim-bin}/target/release/libgh_actions_rust.so" "$out/lua/libgh_actions_rust.so" || true
-         cp "${gh-actions-nvim-bin}/target/release/deps/"*.rlib "$out/lua/deps/"
+         cp "${gh-actions-nvim-bin}/lib/libgh_actions_rust.dylib" "$out/lua/libgh_actions_rust.so" || true
+         cp "${gh-actions-nvim-bin}/lib/libgh_actions_rust.so" "$out/lua/libgh_actions_rust.so" || true
       '';
     };
 }
