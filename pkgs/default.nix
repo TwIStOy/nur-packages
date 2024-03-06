@@ -14,6 +14,5 @@ lib.makeScope newScope
       inherit (pkgs.vimUtils) buildVimPlugin;
     });
     distant = callPackage ./distant {};
-    maple-mono-nf = callPackage ./maple-mono-nf {};
   }
 )
