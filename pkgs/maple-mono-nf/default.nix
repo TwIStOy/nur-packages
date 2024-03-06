@@ -3,6 +3,7 @@
   unzip,
 }:
 pkgs.stdenv.mkDerivation rec {
+  pname = "maple-mono-nf";
   version = "v7.0-beta8";
   src = builtins.fetchurl {
     url = "https://github.com/subframe7536/maple-font/releases/download/${version}/MapleMono-nf.zip";
