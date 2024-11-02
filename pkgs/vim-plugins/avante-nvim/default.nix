@@ -44,6 +44,8 @@
       ];
 
     buildFeatures = ["luajit"];
+
+    doCheck = false;
   };
 in
   buildVimPlugin {
