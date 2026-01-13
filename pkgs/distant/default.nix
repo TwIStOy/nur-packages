@@ -5,7 +5,6 @@
   openssl,
   stdenv,
   perl,
-  darwin,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "distant";
@@ -25,18 +24,11 @@ rustPlatform.buildRustPackage rec {
     rustPlatform.bindgenHook
   ];
 
-  buildInputs =
-    [
-      openssl
-    ]
-    ++ lib.optionals stdenv.isDarwin (with darwin.apple_sdk_11_0.frameworks; [
-      AppKit
-      ApplicationServices
-      CoreVideo
-      Security
-    ]);
+  buildInputs = [
+    openssl
+  ];
 
-  cargoSha256 = "7MNNdm4b9u5YNX04nBtKcrw+phUlpzIXo0tJVfcgb40=";
+  cargoHash = "sha256-HEyPfkusgk8JEYAzIS8Zj5EU0MK4wt4amlsJqBEG/Kc=";
 
   doCheck = false;
 
