@@ -6,7 +6,7 @@
   fetchFromGitHub,
   rustPlatform,
   pkg-config,
-  llvmPackages_17,
+  llvmPackages,
   libuv,
   luajit,
   ...
@@ -24,7 +24,7 @@
     src = "${codesnap-nvim-src}/generator";
     cargoSha256 = "sha256-GudDSrFvzGkhlqOgv1pFcdv4CT2KwqRwJPGhXQzcPuU=";
 
-    LIBCLANG_PATH = "${llvmPackages_17.libclang.lib}/lib";
+    LIBCLANG_PATH = "${llvmPackages.libclang.lib}/lib";
 
     doCheck = false;
 
@@ -46,14 +46,14 @@
 
     nativeBuildInputs = [
       pkg-config
-      llvmPackages_17.libclang
+      llvmPackages.libclang
       libuv
       luajit
     ];
 
     buildInputs =
       [
-        llvmPackages_17.libclang
+        llvmPackages.libclang
         rustPlatform.bindgenHook
         libuv
         luajit
